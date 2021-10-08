@@ -1,6 +1,6 @@
 # app-chat no Heroku
  ```
- o Projeto está publicado no link: https://app-chat-heroku21.herokuapp.com/ 
+https://app-chat-heroku21.herokuapp.com/ 
  
  ```
 # app-chat
