@@ -10,6 +10,7 @@ https://app-chat-heroku21.herokuapp.com/
  Foram utilizadas as tecnologias:
  
  NodeJS: onde foi criado o servidor, utilizando express juntamente com socket
+ segue o link do Git repositorio do servidor: https://github.com/vitormoraes96/server-chat
  
  VueJS: Front end para construir o Chat com login
  
