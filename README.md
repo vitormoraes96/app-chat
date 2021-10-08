@@ -25,7 +25,8 @@ para instalar e acessar na localmente, efetue os seguintes passos:
 
 ~ Vá no terminal e efetue "git clone https://github.com/vitormoraes96/app-chat.git"
 
-~ Após clonar execute o comando "npm install" (antes de executar o comando verifique se está na pasta correta")
+~ Após clonar execute o comando "npm install"
+(antes de executar o comando verifique se está na pasta correta")
 ```
 
 ### Executano o Projeto Localmente
