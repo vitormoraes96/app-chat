@@ -29,7 +29,7 @@ para instalar e acessar na localmente, efetue os seguintes passos:
 (antes de executar o comando verifique se está na pasta correta")
 ```
 
-### Executano o Projeto Localmente
+### Executando o Projeto Localmente
 ```
 Para executar digite no terminal "npm run serve"
 
