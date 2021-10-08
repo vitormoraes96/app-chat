@@ -1,28 +1,38 @@
 <template>
 <div class="container">
     <div v-if="!entrar" class="nav-centro" >
-      <div class="login">
+      <div class="login" >
          <form class="registrar">
            <h1 class="texto">LOGIN</h1>
          <input type="text" class="input" v-model="nome" placeholder="Nome">
          <input type="text" class="input" v-model="email" placeholder="Email">
-         <button v-on:click="botaoEntrar" class="botao-entrar">ENTRAR</button>
+         <button v-on:click.prevent="botaoEntrar" class="botao-entrar">ENTRAR</button>
         </form>
+            <ul>
+      <li v-for=" error in erro" :key="error.id">{{error}}</li>
+    </ul>
       </div>
     </div>
-    <div v-if="entrar" class="nav-esquerda">
+    <div v-if="entrar" class="nav-esquerda" >
+      <div class="">  
         <h1>Pessoas Online</h1>
+          <h1>
+              {{usuario}}
+            {{usuarioOnline()}}   
+          </h1> 
+            <div>
+                {{listagem}}
+            </div>
+      </div> 
     </div>
     <div v-if="entrar" class="nav-direita">
     <div  class="box-mensagens"> 
-      <div  class="mensagens"> 
-      <div v-for="mensagem in mensagens" :key="mensagem.id">
-       
+      <div  > 
+      <div v-for="mensagem in mensagens" :key="mensagem.id" class="mensagens">
         <b>
           {{mensagem.usuario}}
         </b>
         : {{mensagem.texto}}
-
       </div>
       </div>   
     </div>
@@ -41,24 +51,33 @@ export default {
   data(){
       return {
         entrar: false,
-        erro: false,
+        erro: [],
         nome: "",
         email: "",
         texto: "",
         mensagens: [],
-      }
+        usuario: "",
+        }
   },
   methods: {
+      
     botaoEntrar(){
 
-      this.entrar = true;
-      this.socketInstance = io("http://localhost:3000");
-      this.socketInstance.on(
-        "mensagem:recebida", (data) => {
-          this.mensagens = this.mensagens.concat(data);
+        this.erro = [];
+        if(!this.nome) {
+          this.erro.push("O nome deve ser preenchido");
         }
-      );
+        else if(!this.email) {
+          this.erro.push("O email deve ser preenchido!");
+        } else {
+          this.entrar = true;
+          this.socketInstance = io("http://localhost:3000");
+          this.socketInstance.on(
+         "mensagem:recebida", (data) => {
+          this.mensagens = this.mensagens.concat(data);
+        });
 
+    }
   },
     enviarMsg(){
       this.addMsg();
@@ -68,14 +87,20 @@ export default {
       const mensagem = {
         id: new Date().getTime(),
         texto: this.texto,
-        usuario: this.nome
+        usuario: this.nome,
+        email: this.email
       };
       this.mensagens = this.mensagens.concat(mensagem);
       this.socketInstance.emit('mensagem', mensagem);
+      console.log(this.mensagens)
+    },
+    usuarioOnline(){
+      this.socketInstance.on("broadcast", (data) => {
+          this.usuario = data;
+       })             
     }
   }
-  
-}
+  }
 </script>
 
 <style>
@@ -140,6 +165,10 @@ export default {
   padding: 20px;
   overflow: auto;
   grid-area: d;
+}
+.mensagens {
+  padding: 5px;
+  
 }
 .nav-pe{
   background: #00f;
