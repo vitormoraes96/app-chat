@@ -71,7 +71,7 @@ export default {
           this.erro.push("O email deve ser preenchido!");
         } else {
           this.entrar = true;
-          this.socketInstance = io("http://localhost:3000");
+          this.socketInstance = io("https://servidor-chat-app.herokuapp.com/");
           this.socketInstance.on(
          "mensagem:recebida", (data) => {
           this.mensagens = this.mensagens.concat(data);
